@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.active {
+    @apply bg-primaryBlue ring-1 ring-blue-900 ring-offset-0 ring-offset-slate-50
+}
+
+
+
+@layer components {
+    .navigation {
+        @apply container mx-auto my-[35px] h-[90px] border rounded-md shadow-md flex items-center justify-between
+    }
+
+    .button {
+        @apply bg-primaryBlue text-white px-4 py-2 rounded-xl w-[110px] text-center shadow-md font-mono
+    }
+
+    .register-page {
+        @apply container mx-auto flex items-center justify-around border rounded-md
+    }
+
+    .register-title {
+        @apply container border border-blue-200 mx-auto h-[90px] w-[100%] flex items-center justify-center rounded-md shadow-md text-primaryBlue text-2xl font-bold font-mono
+    }
+
+    .register-form {
+        @apply flex flex-col border border-blue-200 rounded-md shadow-md gap-2 justify-center items-center py-5
+    }
+
+    .input-field {
+        @apply w-[90%] h-[45px] border rounded-md my-2 pl-8
+    }
+}
