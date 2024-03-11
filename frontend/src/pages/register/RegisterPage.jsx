@@ -3,8 +3,14 @@ import * as Yup from 'yup';
 
 import image from '../../assets/register_image.png';
 import { FileParser } from '../../utils/fileParser';
+import UserService from '../../services/userService';
 
 const RegisterPage = () => {
+
+  const VALID_TYPES = ['image/png', 'image/jpeg'];
+  let KB = 1024;
+  let MB = KB * 1024;
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -22,14 +28,16 @@ const RegisterPage = () => {
       lastName: Yup.string().required('Required'),
       email: Yup.string().email('Invalid email address').required('Required'),
       password: Yup.string().required('Required'),
-      image: Yup.string().required('Required'),
+      image: Yup.mixed().required('Image required').test(
+        'fileSize', 'File is too large', (value) => value.size < 2 * MB
+      ).test('fileType', 'Invalid file type', (value) => VALID_TYPES.includes(value.type))
     }),
     onSubmit: (values) => {
-      console.log(values);
-
       FileParser(values.image)
         .then((res) => {
-          console.log(res);
+          UserService.registerUser({ ...values, image: res })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
         })
         .catch((err) => {
           console.log(err);
